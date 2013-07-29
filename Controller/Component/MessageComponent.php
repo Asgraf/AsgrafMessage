@@ -16,6 +16,7 @@ class MessageComponent extends Component {
 	}
 	
 	public function flash($msg,$url=null,$type='neutral',$metadata=array()) {
+		if(!is_array($metadata)) throw new InternalErrorException(__('Invalid metadata value. Array expected'));
 		if(empty($this->controller->request->params['ext'])) {
 			if(!empty($this->controller->Session)) {
 				$this->controller->Session->setFlash($msg,'default',array(),$type);
@@ -24,8 +25,8 @@ class MessageComponent extends Component {
 				$this->controller->flash($msg,$url);
 			}
 		} else {
-			$this->controller->set('responce',array_merge(array('message'=>$msg,'redirect'=>Router::url($url),'type'=>$type),$metadata));
-			$this->controller->set('_serialize','responce');
+			$this->controller->set('response',array_merge(array('message'=>$msg,'redirect'=>Router::url($url),'type'=>$type),$metadata));
+			$this->controller->set('_serialize','response');
 		}
 	}
 }
