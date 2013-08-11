@@ -24,7 +24,7 @@ class MessageComponent extends Component {
 	 * @return array|bool|null
 	 * @throws InternalErrorException
 	 */
-	public function flash(string $msg,$url=null,$type='neutral',$metadata=array()) {
+	public function flash($msg,$url=null,$type='neutral',$metadata=array()) {
 		if(!is_array($metadata)) throw new InternalErrorException(__('Invalid metadata value. Array expected'));
 		if(!$this->controller->request['ext'] && !$this->controller->request['requested']) {
 			if(!empty($this->controller->Session)) {
