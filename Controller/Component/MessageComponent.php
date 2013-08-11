@@ -14,8 +14,17 @@ class MessageComponent extends Component {
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
 	}
-	
-	public function flash($msg,$url=null,$type='neutral',$metadata=array()) {
+
+	/**
+	 * @param string $msg Message to flash
+	 * @param mixed  $url Url to redirect or null for no redirect
+	 * @param string $type flash message id
+	 * @param array  $metadata array additional options to return when json or xml is requested
+	 *
+	 * @return array|bool|null
+	 * @throws InternalErrorException
+	 */
+	public function flash(string $msg,$url=null,$type='neutral',$metadata=array()) {
 		if(!is_array($metadata)) throw new InternalErrorException(__('Invalid metadata value. Array expected'));
 		if(!$this->controller->request['ext'] && !$this->controller->request['requested']) {
 			if(!empty($this->controller->Session)) {
