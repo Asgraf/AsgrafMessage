@@ -6,6 +6,7 @@ App::uses('Component', 'Controller');
  * @link https://github.com/Asgraf/AsgrafMessage
  */
 class MessageComponent extends Component {
+	private $options = array();
 	/**
 	 * @var Controller
 	 */
@@ -28,7 +29,8 @@ class MessageComponent extends Component {
 		if(!is_array($metadata)) throw new InternalErrorException(__('Invalid metadata value. Array expected'));
 		if(!$this->controller->request['ext'] && !$this->controller->request['requested']) {
 			if(!empty($this->controller->Session)) {
-				$this->controller->Session->setFlash($msg,'default',array(),$type);
+				$metadata['type']=$type;
+				$this->controller->Session->setFlash($msg,Hash::get($this->settings,'element')?:'default',$metadata,$type);
 				if(!empty($url)) return $this->controller->redirect($url) || null;
 			} else {
 				$this->controller->flash($msg,$url);
